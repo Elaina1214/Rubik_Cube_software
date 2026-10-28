@@ -97,15 +97,19 @@ static int find_sticker(const Sticker s[54], int x, int y, int z,
     return -1;
 }
 
-/* 面 -> 旋转轴与方向（右手定则正方向为 +1） */
+/* 面 -> 旋转轴与方向（右手定则正方向为 +1）
+ * 从面外侧看顺时针 = 绕“外法向轴”右手系的负方向转 90°：
+ *   法向为正轴的面 (U/R/F) -> dir = -1
+ *   法向为负轴的面 (D/L/B) -> dir = +1
+ */
 static void face_rotation(int f, int *axis, int *dir) {
     switch (f) {
-        case 0: *axis = 1; *dir = -1; break; // U：从上往下看顺时针
-        case 1: *axis = 0; *dir =  1; break; // R：从右往左看顺时针
-        case 2: *axis = 2; *dir =  1; break; // F：从前往后看顺时针
-        case 3: *axis = 1; *dir =  1; break; // D：从下往上看顺时针
-        case 4: *axis = 0; *dir = -1; break; // L：从左往右看顺时针
-        case 5: *axis = 2; *dir = -1; break; // B：从后往前看顺时针
+        case 0: *axis = 1; *dir = -1; break; // U
+        case 1: *axis = 0; *dir = -1; break; // R
+        case 2: *axis = 2; *dir = -1; break; // F
+        case 3: *axis = 1; *dir =  1; break; // D
+        case 4: *axis = 0; *dir =  1; break; // L
+        case 5: *axis = 2; *dir =  1; break; // B
     }
 }
 
